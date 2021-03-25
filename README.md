@@ -126,4 +126,6 @@ What do these do, you ask? Look, don't ask difficult questions. Feel free to edi
 
 You also have to copy steam_appid.txt into the root directory of the built app, otherwise you'll have the same "missing steam_appid.txt" error as earlier.
 
+If you're making a game that doesn't update the display frequently, you might also have issues with the Steam Overlay not updating, as it hooks into whatever render process is active. If that process isn't active, Steam Overlay can't update. In that case, there are [workarounds](https://github.com/greenheartgames/greenworks/wiki/Troubleshooting#steam-overlay-is-unresponsive--frozen). But if you're making a game that uses canvas, and requestAnimationFrame, this shouldn't be a problem.
+
 That's it!
