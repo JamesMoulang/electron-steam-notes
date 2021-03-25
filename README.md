@@ -1,5 +1,68 @@
 # electron-steam-notes
+
 My notes on getting electron html5 apps working with Steamworks, Greenworks, Overlay, etc.
+
+If you're reading this you either want to get up and running as quickly as possible, or maybe you've managed to greenworks etc. working independently, but you need to set up your project to work with Steam Overlay.
+
+## Quick start from scratch
+
+Start by checking out this github repo. We'll be doing everything inside the example-app folder.
+
+The starting state of the project is basically a freshly initialised electron-forge project that you need to add Greenworks, and Steamworks SDK files to.
+
+First get all the npm stuff you need to run electron-forge. Note that the package.json already specifies electron v11.4.0 which is the version I found to actually work with Greenworks.
+
+```bash
+cd example-app
+npm install
+```
+
+Now we need to set up Greenworks in the src folder of our app (the folder that actually contains the app files, as opposed to electron-forge stuff). It's not as simple as just an npm install, though.
+
+```bash
+cd src
+npm install --save --ignore-scripts git+https://github.com/greenheartgames/greenworks.git
+```
+
+Now we need to add the pre-built Greenworks binaries to Greenworks in node_modules
+
+You can find the binaries here: https://greenworks-prebuilds.armaldio.xyz/
+
+Look for the 64 bit, Electron, Windows, Steamworks v1.5.0 version.
+
+11.0.0-beta.11 -> 11.4.1 (v85)
+
+Copy greenworks-win64.node into node_modules/greenworks/lib (you may have to create this folder)
+
+Two more files need to be added to this same folder, and they can be found at https://partner.steamgames.com/downloads/list (note you need to log in to get these files).
+
+It's important for the Steamworks SDK version to match the prebuilt Greenworks verison. We need version 1.50
+
+You need two files per platform:
+
+* redistributable_bin/win64/steam_api64.dll
+* sdkencryptedappticket from public/steam/lib e.g. public/steam/lib/win64/sdkencryptedappticket64.dll
+
+Now you can
+
+```bash
+npm install
+```
+
+You should be all set up at this point. You can test by running:
+
+```bash
+cd ..
+npm start
+```
+
+If this all works, you can skip to the "building an app" section at the bottom of this page to create a distributable, and get Steam Overlay running. If you want to set this up yourself, because this didn't work for some reason, or you actually want to understand the structure of the program, I recommend looking at [this page by @slosumo](https://github.com/slosumo/greenworks_electron/blob/main/greenworks_isntructions.txt).
+
+Note that Steam Overlay probably won't work out of the box with this app, but if you add your own game files it probably will.
+
+Good luck!
+
+## Building an app that works with Steam Overlay
 
 So, at this point you have a working electron app that you can run 'locally' (i.e. not as a distributable) and you want to:
 
@@ -9,7 +72,7 @@ So, at this point you have a working electron app that you can run 'locally' (i.
 
 I used [electron-forge](https://github.com/electron-userland/electron-forge) to package up my app, but other options exist.
 
-## Setting up electron-forge
+### Setting up electron-forge
 
 Install electron-forge globally and create a new folder than contains your project.
 
@@ -36,7 +99,7 @@ npm uninstall electron
 And install the version we want
 
 ```bash
-npm install electron@11.4.0
+npm install --save-dev electron@11.4.0
 ```
 
 By this point, your dependencies in package.json should look like this:
@@ -73,11 +136,11 @@ npm start
 
 A few errors are possible at this point:
 
-### Uncaught Error: Steam initialization failed. Steam is running,but steam_appid.txt is missing.
+#### Uncaught Error: Steam initialization failed. Steam is running,but steam_appid.txt is missing.
 
 This is pretty self-explanatory. The steam_appid.txt file needs to go in the root directory of the electron-forge project. Just copy it to where it needs to be.
 
-### Cannot find module '...index.js'. Please verify that the package.json has a valid "main" entry
+#### Cannot find module '...index.js'. Please verify that the package.json has a valid "main" entry
 
 Make sure that the value of main in package.json is pointing at the right file. The default value was
 
@@ -93,7 +156,7 @@ for me, which doesn't match the structure of my electron app. It should match th
 
 At this point, as long as you're using a valid steam_appid.txt file, and Steam is running, you should see yourself playing your game in Steam. Hooray!
 
-## Building an app
+### Building an app
 
 In order to get Steam Overlay running in your game, you have to launch it via Steam. In order to launch it via steam, it has to be an app. So let's make an app.
 
@@ -105,7 +168,7 @@ npm run make
 
 Once this has completed you should see 'your-game-win32-x64' within the 'out' folder.
 
-## Launching your App through Steam
+### Launching your App through Steam
 
 From the Steam Client, click Games > Add a Non-Steam Game to My Library...
 
