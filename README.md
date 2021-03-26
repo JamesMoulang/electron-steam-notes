@@ -6,14 +6,13 @@ If you're reading this you either want to get up and running as quickly as possi
 
 ## Quick start from scratch
 
-Start by checking out this github repo. We'll be doing everything inside the example-app folder.
+Start by checking out this github repo.
 
 The starting state of the project is basically a freshly initialised electron-forge project that you need to add Greenworks, and Steamworks SDK files to.
 
 First get all the npm stuff you need to run electron-forge. Note that the package.json already specifies electron v11.4.0 which is the version I found to actually work with Greenworks.
 
 ```bash
-cd example-app
 npm install
 ```
 
