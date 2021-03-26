@@ -1,0 +1,10 @@
+{
+  "name": "electron example app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "start.js",
+  "author": "James Moulang",
+  "dependencies": {
+    "greenworks": "github:greenheartgames/greenworks"
+  }
+}
