@@ -37,7 +37,7 @@ Two more files need to be added to this same folder, and they can be found at ht
 
 It's important for the Steamworks SDK version to match the prebuilt Greenworks verison. We need version 1.50
 
-You need two files per platform:
+Copy these two files to the lib folder:
 
 * redistributable_bin/win64/steam_api64.dll
 * sdkencryptedappticket from public/steam/lib e.g. public/steam/lib/win64/sdkencryptedappticket64.dll
@@ -63,11 +63,13 @@ Good luck!
 
 ## Building an app that works with Steam Overlay
 
-So, at this point you have a working electron app that you can run 'locally' (i.e. not as a distributable) and you want to:
+Follow these steps if you have a working electron app that you can run 'locally' (i.e. not as a distributable) and you want to:
 
 1. Add your game files
 2. Create a distributable
 3. Get Steam Overlay running
+
+**Note: if you're following the quick start guide you don't need to do this, you can skip to the "building an app" section**
 
 I used [electron-forge](https://github.com/electron-userland/electron-forge) to package up my app, but other options exist.
 
